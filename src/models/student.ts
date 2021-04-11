@@ -3,16 +3,16 @@ import { ILessonDoc } from "./lesson";
 
 export interface IStudent {
     name: string;
+    email: string;
+    password: string;
     lessons?: ILessonDoc;
-    // email: string;
-    // password: string;
 }
 
 const StudentSchema = new Schema({
     name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
     lessons: [{ type: Types.ObjectId, ref: "Lesson" }],
-    // email: { type: String, required: true },
-    // password: { type: String, required: true },
 });
 
 export interface IStudentDoc extends IStudent, Document {}

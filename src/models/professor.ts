@@ -2,11 +2,15 @@ import { Document, model, Model, Schema, Types } from "mongoose";
 import { ILessonDoc } from "./lesson";
 export interface IProfessor {
     name: string;
+    email: string;
+    password: string;
     lessons?: ILessonDoc;
 }
 
 const ProfessorSchema = new Schema({
     name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
     lessons: [{ type: Types.ObjectId, ref: "Lesson" }],
 });
 
