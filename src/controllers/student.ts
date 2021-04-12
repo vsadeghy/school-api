@@ -13,7 +13,7 @@ export const getStudents = async (_req: Request, res: Response) => {
     res.send(JSON.stringify(students, null, 2));
 };
 
-export const signup = async (req: Request, res: Response) => {
+export const createStudent = async (req: Request, res: Response) => {
     console.log("checking for existing student");
     const body: UserInput = req.body;
     const existingStudentWithMail = await Student.findOne({
@@ -46,4 +46,10 @@ export const signup = async (req: Request, res: Response) => {
         { expiresIn: "1h" }
     );
     res.json({ token, studentId });
+};
+
+export const deleteStudent = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    await Student.findByIdAndDelete(id);
+    res.send("student deleted");
 };

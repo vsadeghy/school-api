@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { getStudents } from "../controllers/student";
+import { deleteStudent, getStudents } from "../controllers/student";
 import { validUser } from "../middlewares/validUser";
-import { signup } from "./../controllers/student";
+import { createStudent } from "./../controllers/student";
 
 const router = Router();
 
 router.get("/", getStudents);
-router.post("/signup", validUser, signup);
+router.post("/signup", validUser, createStudent);
+router.delete(":id", deleteStudent);
 
 export const studentRouter = router;
