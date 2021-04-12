@@ -2,6 +2,7 @@ import "dotenv-safe/config";
 import express, { json, Request, Response } from "express";
 import mongoose from "mongoose";
 import { studentRouter } from "./routes/student";
+import { teacherRouter } from "./routes/teacher";
 import { StatusError } from "./utils/StatusError";
 
 const main = async () => {
@@ -19,6 +20,7 @@ const main = async () => {
     app.use(json());
 
     app.use("/students", studentRouter);
+    app.use("/teachers", teacherRouter);
 
     app.use((error: StatusError, _req: Request, res: Response) => {
         console.log(error);
