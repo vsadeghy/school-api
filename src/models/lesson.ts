@@ -1,16 +1,16 @@
 import { Document, model, Model, Schema, Types } from "mongoose";
-import { IProfessorDoc } from "./professor";
 import { IStudentDoc } from "./student";
+import { ITeacherDoc } from "./teacher";
 
 export interface ILesson {
     name: string;
-    professor?: IProfessorDoc;
+    teacher?: ITeacherDoc;
     students?: IStudentDoc[];
 }
 
 const LessonSchema = new Schema({
     name: { type: String, required: true },
-    professor: { type: Types.ObjectId, ref: "Professor" },
+    teacher: { type: Types.ObjectId, ref: "Teacher" },
     students: [{ type: Types.ObjectId, ref: "Student" }],
 });
 
