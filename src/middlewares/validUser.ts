@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusError } from "../utils/StatusError";
 import { UserInput } from "../utils/UserInput";
-const emailRegex = /^\S+@\S+\.\S+$/;
+import { emailRegex } from "./../utils/emailRegex";
 
 export const validUser = (req: Request, _res: Response, next: NextFunction) => {
     const user: UserInput = req.body;

@@ -1,5 +1,6 @@
 import { Document, model, Model, Schema } from "mongoose";
-import { ID } from "./../types";
+import { ID } from "../types";
+import { emailRegex } from "../utils/emailRegex";
 import { ILessonDoc } from "./lesson";
 export interface ITeacher {
     name: string;
@@ -10,7 +11,10 @@ export interface ITeacher {
 }
 
 export interface ITeacherDoc extends ITeacher, Document {}
-export interface ITeacherModel extends Model<ITeacherDoc> {}
+export interface ITeacherModel extends Model<ITeacherDoc> {
+    findByEmail(email: string): Promise<ITeacherDoc | null>;
+    findByUsername(username: string): Promise<ITeacherDoc | null>;
+}
 
 const TeacherSchema = new Schema({
     name: { type: String, required: true },
@@ -20,5 +24,13 @@ const TeacherSchema = new Schema({
     lessons: [{ type: Schema.Types.ObjectId, ref: "Lesson" }],
 });
 
-const Professor = model<ITeacherDoc, ITeacherModel>("Professor", TeacherSchema);
-export default Professor;
+TeacherSchema.static("findByEmail", (email: string) => {
+    return email.match(emailRegex) ? Teacher.findOne({ email }) : null;
+});
+
+TeacherSchema.static("findByUsername", (username: string) => {
+    return Teacher.findOne({ username });
+});
+
+const Teacher = model<ITeacherDoc, ITeacherModel>("Professor", TeacherSchema);
+export default Teacher;

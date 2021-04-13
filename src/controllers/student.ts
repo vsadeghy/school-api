@@ -16,12 +16,10 @@ export const getStudents = async (_req: Request, res: Response) => {
 export const createStudent = async (req: Request, res: Response) => {
     console.log("checking for existing student");
     const body: UserInput = req.body;
-    const existingStudentWithMail = await Student.findOne({
-        email: body.email,
-    });
-    const existingStudentWithUsername = await Student.findOne({
-        username: body.username,
-    });
+    const existingStudentWithMail = await Student.findByEmail(body.email);
+    const existingStudentWithUsername = await Student.findByUsername(
+        body.username
+    );
     if (existingStudentWithUsername || existingStudentWithMail) {
         res.status(400).send(
             "a student with the same username or mail already exists"

@@ -1,4 +1,5 @@
 import { Document, model, Model, Schema, Types } from "mongoose";
+import { emailRegex } from "./../utils/emailRegex";
 import { StudentLesson } from "./lesson";
 
 export interface IStudent {
@@ -10,7 +11,10 @@ export interface IStudent {
 }
 
 export interface IStudentDoc extends IStudent, Document {}
-export interface IStudentModel extends Model<IStudentDoc> {}
+export interface IStudentModel extends Model<IStudentDoc> {
+    findByEmail(email: string): Promise<IStudentDoc | null>;
+    findByUsername(username: string): Promise<IStudentDoc | null>;
+}
 
 const StudentSchema = new Schema({
     name: { type: String, required: true },
@@ -23,6 +27,14 @@ const StudentSchema = new Schema({
             grade: { type: Number, min: 0, max: 20 },
         },
     ],
+});
+
+StudentSchema.static("findByEmail", (email: string) => {
+    return email.match(emailRegex) ? Student.findOne({ email }) : null;
+});
+
+StudentSchema.static("findByUsername", (username: string) => {
+    return Student.findOne({ username });
 });
 
 const Student = model<IStudentDoc, IStudentModel>("Student", StudentSchema);
