@@ -10,6 +10,9 @@ export const getStudents = async (_req: Request, res: Response) => {
         res.send("no students found");
         return;
     }
+    // for (const student of students) {
+    //     await student.populate("lessons").execPopulate();
+    // }
     res.send(JSON.stringify(students, null, 2));
 };
 

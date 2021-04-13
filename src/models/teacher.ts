@@ -7,7 +7,7 @@ export interface ITeacher {
     username: string;
     email: string;
     password: string;
-    lessons?: ID[] | ILessonDoc[];
+    lessons: ID[] | ILessonDoc[];
 }
 
 export interface ITeacherDoc extends ITeacher, Document {}
@@ -32,5 +32,5 @@ TeacherSchema.static("findByUsername", (username: string) => {
     return Teacher.findOne({ username });
 });
 
-const Teacher = model<ITeacherDoc, ITeacherModel>("Professor", TeacherSchema);
+const Teacher = model<ITeacherDoc, ITeacherModel>("Teacher", TeacherSchema);
 export default Teacher;

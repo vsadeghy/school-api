@@ -33,6 +33,13 @@ const main = async () => {
     app.listen(PORT, () => {
         console.log(`server started on localhost:${PORT}`);
     });
+
+    // const student = await Student.findById("607610f78941a6104074e2cd");
+    // const removedLesson = student.getLesson("6075ef77f692a422a81a57f1");
+    // const removed = removeItem(student.lessons, removedLesson);
+    // console.log("removed: ", removed);
+    // student.lessons = removed;
+    // await student.save();
 };
 
 main();

@@ -1,4 +1,5 @@
-import { Document, model, Model, Schema, Types } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
+import { ID } from "./../types";
 import { emailRegex } from "./../utils/emailRegex";
 import { StudentLesson } from "./lesson";
 
@@ -10,7 +11,10 @@ export interface IStudent {
     lessons: StudentLesson[];
 }
 
-export interface IStudentDoc extends IStudent, Document {}
+export interface IStudentDoc extends IStudent, Document {
+    hasLesson(lessonId: ID): boolean;
+    getLesson(lessonId: ID): StudentLesson;
+}
 export interface IStudentModel extends Model<IStudentDoc> {
     findByEmail(email: string): Promise<IStudentDoc | null>;
     findByUsername(username: string): Promise<IStudentDoc | null>;
@@ -23,7 +27,7 @@ const StudentSchema = new Schema({
     password: { type: String, required: true },
     lessons: [
         {
-            lessonId: { type: Types.ObjectId, ref: "Lesson" },
+            lesson: { type: Schema.Types.ObjectId, ref: "Lesson" },
             grade: { type: Number, min: 0, max: 20 },
         },
     ],
@@ -35,6 +39,16 @@ StudentSchema.static("findByEmail", (email: string) => {
 
 StudentSchema.static("findByUsername", (username: string) => {
     return Student.findOne({ username });
+});
+
+StudentSchema.method("getLesson", function (this: any, lessonId: ID) {
+    return this.lessons.find(
+        (lesson: { lesson: ID }) => lesson.lesson == lessonId
+    );
+});
+
+StudentSchema.method("hasLesson", function (this: any, lessonId: ID) {
+    return this.getLesson(lessonId) ? true : false;
 });
 
 const Student = model<IStudentDoc, IStudentModel>("Student", StudentSchema);

@@ -6,6 +6,8 @@ import { UserInput } from "../utils/UserInput";
 
 export const getTeachers = async (_req: Request, res: Response) => {
     const teachers = await Teacher.find();
+    // .populate("lessons", "-__v -teacher")
+    // .select("-__v -password");
     if (!teachers.length) {
         res.send("no teachers found");
         return;
