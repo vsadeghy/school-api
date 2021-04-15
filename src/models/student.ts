@@ -1,6 +1,6 @@
 import { Document, model, Model, Schema } from "mongoose";
-import { ID } from "./../types";
-import { emailRegex } from "./../utils/emailRegex";
+import { ID } from "../types";
+import { emailRegex } from "../utils/emailRegex";
 import { StudentLesson } from "./lesson";
 
 export interface IStudent {

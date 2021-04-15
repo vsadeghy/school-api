@@ -1,6 +1,6 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { ID } from "../types";
-import { removeItem } from "./../utils/removeItem";
+import { removeItem } from "../utils/removeItem";
 import Student, { IStudentDoc } from "./student";
 import Teacher, { ITeacherDoc } from "./teacher";
 

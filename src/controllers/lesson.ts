@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import Lesson, { ILesson } from "../models/lesson";
+import Lesson, { ILesson, ILessonDoc } from "../models/lesson";
 import Student from "../models/student";
 import Teacher from "../models/teacher";
 import { ID, Select } from "../types";
-import { ILessonDoc } from "./../models/lesson";
 
 export const getLessons = async (_req: Request, res: Response) => {
     const lessons = await Lesson.find();

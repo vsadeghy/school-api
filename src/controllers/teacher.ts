@@ -6,6 +6,7 @@ import Student from "../models/student";
 import Teacher from "../models/teacher";
 import { ID } from "../types";
 import { UserInput } from "../utils/UserInput";
+import { validateUser } from "../utils/validateUser";
 
 export const getTeachers = async (_req: Request, res: Response) => {
     const teachers = await Teacher.find()
@@ -20,6 +21,7 @@ export const getTeachers = async (_req: Request, res: Response) => {
 
 export const createTeacher = async (req: Request, res: Response) => {
     const body: UserInput = req.body;
+    validateUser(body, res);
     const existingTeacherWithMail = await Teacher.findByEmail(body.email);
     const existingTeacherWithUsername = await Teacher.findByUsername(
         body.username

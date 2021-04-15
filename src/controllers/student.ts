@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import Student from "../models/student";
 import { UserInput } from "../utils/UserInput";
+import { validateUser } from "../utils/validateUser";
 
 export const getStudents = async (_req: Request, res: Response) => {
     const students = await Student.find();
@@ -17,8 +18,8 @@ export const getStudents = async (_req: Request, res: Response) => {
 };
 
 export const createStudent = async (req: Request, res: Response) => {
-    console.log("checking for existing student");
     const body: UserInput = req.body;
+    validateUser(body, res);
     const existingStudentWithMail = await Student.findByEmail(body.email);
     const existingStudentWithUsername = await Student.findByUsername(
         body.username
